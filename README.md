@@ -1,15 +1,11 @@
-# Elysia with Bun runtime
+# Gamertime
 
-## Getting Started
-To get started with this template, simply paste this command into your terminal:
-```bash
-bun create elysia ./elysia-example
-```
+A non-profit social media website
 
 ## Development
-To start the development server run:
-```bash
-bun run dev
-```
 
-Open http://localhost:3000/ with your browser to see the result.
+1. Install [Bun](https://bun.sh/docs/installation)
+
+2. Run `bun dev`
+
+3. Open http://localhost:3000/ in your browser
