@@ -1,4 +1,5 @@
 import { getUser } from "../MockBackend";
+import { HStack } from "../reusable/Layout";
 import { Page } from "../reusable/Page";
 import { GuestHome } from "./GuestHome";
 
@@ -14,24 +15,15 @@ export function Home() {
 
 function TopBar() {
   return (
-    <nav>
-      <div id="nav-contents">
-        <h1>gamertime</h1>
+    <nav class="bg-gray-200 py-4 px-8">
+      <HStack cn="mx-auto max-w-screen-lg justify-between">
+        <h1 class="text-3xl font-bold">gamertime</h1>
 
-        <div id="nav-right-side">
-          <button id="new-post-button">New post</button>
-          <Avatar />
-        </div>
-      </div>
+        <img
+          class="rounded-full size-12 ml-4"
+          src="https://avatars.githubusercontent.com/u/20482179?v=4"
+        />
+      </HStack>
     </nav>
-  );
-}
-
-function Avatar() {
-  return (
-    <img
-      class="avatar"
-      src="https://avatars.githubusercontent.com/u/20482179?v=4"
-    />
   );
 }
