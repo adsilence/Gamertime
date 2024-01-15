@@ -8,7 +8,9 @@
     "dev": "concurrently \"bun serve\" \"bun tailwind\""
   },
   "dependencies": {
+    "@elysiajs/cookie": "^0.8.0",
     "@elysiajs/html": "^0.8.0",
+    "@elysiajs/jwt": "^0.8.0",
     "@elysiajs/static": "^0.8.1",
     "classnames": "^2.5.1",
     "elysia": "latest"

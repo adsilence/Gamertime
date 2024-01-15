@@ -1,10 +1,8 @@
-import { getUser } from "../MockBackend";
+import { User } from "../auth/auth";
 import { HStack, VStack } from "../reusable/Layout";
 import { Page } from "../reusable/Page";
-import { GuestHome } from "./GuestHome";
 
-export function Home() {
-  if (!getUser()) return <GuestHome />;
+export function Home(context: {user: User}) {
 
   return (
     <Page>
@@ -14,7 +12,7 @@ export function Home() {
 
           <img
             class="rounded-full size-8 ml-4"
-            src="https://avatars.githubusercontent.com/u/20482179?v=4"
+            src={context.user.avatar}
           />
         </HStack>
       </nav>
@@ -23,7 +21,7 @@ export function Home() {
         <HStack align="start" cn="mb-8">
           <img
             class="rounded-full size-12 mr-4"
-            src="https://avatars.githubusercontent.com/u/20482179?v=4"
+            src={context.user.avatar}
           />
           <VStack align="end" cn="grow">
             <textarea
