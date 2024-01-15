@@ -1,10 +1,14 @@
 import { Elysia } from "elysia";
 import jwt from "@elysiajs/jwt";
+import bcrypt from "bcrypt";
 
 /**
  * @deprecated - Going to be deleted and replacted with database
  */
 const users: UserStore = {};
+
+// TODO: Make config
+const SALT_ROUNDS = 10;
 
 export interface User {
   email: string;
@@ -17,14 +21,14 @@ interface UserStore {
   [username: string]: { user: User; password: string };
 }
 
-export function registerUser(
+export async function registerUser(
   newUser: {
     email: string;
     username: string;
     displayName: string;
   },
   password: string
-): User {
+): Promise<User> {
   const user: User = {
     email: newUser.email,
     username: newUser.username,
@@ -33,19 +37,19 @@ export function registerUser(
   };
 
   // TODO: Save user to database instead of in memory
-  // TODO: Hash password
-  users[newUser.email] = { user: user, password: password };
+  const hash = await bcrypt.hash(password, SALT_ROUNDS);
+  users[newUser.email] = { user: user, password: hash };
 
   return user;
 }
 
-export function verifyUser(body: {
+export async function verifyUser(body: {
   password: string;
   username: string;
-}): User | false {
+}): Promise<false | User> {
   if (
     !!users[body.username] &&
-    users[body.username].password === body.password
+    (await bcrypt.compare(body.password, users[body.username].password))
   ) {
     return users[body.username].user;
   }
@@ -67,7 +71,7 @@ function isLoggedIn(jwt: any, cookie: any) {
 
 async function getUser(jwt: any, cookie: any): Promise<User | undefined> {
   if (cookie["auth"]) {
-    return await Promise.resolve(jwt.verify(cookie["auth"].get()));
+    return await Promise.resolve(jwt.verify(await cookie["auth"].get()));
   }
 }
 
