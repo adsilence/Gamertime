@@ -1,10 +1,9 @@
-import { getUser } from "../MockBackend";
+import { User } from "../auth/auth";
+import { Button } from "../reusable/Button";
 import { HStack, VStack } from "../reusable/Layout";
 import { Page } from "../reusable/Page";
-import { GuestHome } from "./GuestHome";
 
-export function Home() {
-  if (!getUser()) return <GuestHome />;
+export function Home(context: {user: User}) {
 
   return (
     <Page>
@@ -12,10 +11,12 @@ export function Home() {
         <HStack cn="mx-auto max-w-screen-md justify-between">
           <h1 class="text-3xl font-bold">gamertime</h1>
 
-          <img
-            class="rounded-full size-8 ml-4"
-            src="https://avatars.githubusercontent.com/u/20482179?v=4"
-          />
+          <HStack>
+            <a class="btn btn-sm self-start" href="/logout">
+              logout
+            </a>
+            <img class="rounded-full size-8 ml-4" src={context.user.avatar} />
+          </HStack>
         </HStack>
       </nav>
 
@@ -23,7 +24,7 @@ export function Home() {
         <HStack align="start" cn="mb-8">
           <img
             class="rounded-full size-12 mr-4"
-            src="https://avatars.githubusercontent.com/u/20482179?v=4"
+            src={context.user.avatar}
           />
           <VStack align="end" cn="grow">
             <textarea
