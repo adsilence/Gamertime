@@ -16,6 +16,7 @@ export const login = new Elysia()
     setCookie("auth", await jwt.sign(user), {
       httpOnly: true,
       sameSite: true,
+      secure: true,
       maxAge: COOKIE_MAX_AGE,
     });
     set.redirect = "/";
