@@ -6,12 +6,10 @@ interface StackProps {
   cn?: string;
 }
 
-export function HStack({ children, align = "center", cn }: StackProps) {
-  return <div class={classNames(`flex items-${align}`, cn)}>{children}</div>;
+export function HStack({ children, cn }: StackProps) {
+  return <div class={classNames(`flex`, cn)}>{children}</div>;
 }
 
 export function VStack({ children, align = "center", cn }: StackProps) {
-  return (
-    <div class={classNames(`flex flex-col items-${align}`, cn)}>{children}</div>
-  );
+  return <div class={classNames(`flex flex-col`, cn)}>{children}</div>;
 }

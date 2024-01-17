@@ -1,18 +1,20 @@
 export function Input({
   label,
-  id,
   name,
+  id = name,
   type,
 }: {
   label: string;
-  id: string;
   name: string;
+  id?: string;
   type?: string | undefined;
 }) {
   return (
     <div>
-      <label for={id}>{label}</label>
-      <input id={id} name={name} type={type} />
+      <label class="label" for={id}>
+        {label}
+      </label>
+      <input class="input input-bordered" id={id} name={name} type={type} />
     </div>
   );
 }
