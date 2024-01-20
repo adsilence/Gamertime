@@ -1,5 +1,5 @@
 import { Elysia } from "elysia";
-import { User, verifyUser, registerUser } from "./auth";
+import { User, verifyUser, registerUser, LOGIN_FAILURE_REASON } from "./auth";
 import { Signup } from "../pages/Signup";
 import { Login } from "../pages/Login";
 import cookie from "@elysiajs/cookie";
@@ -22,10 +22,14 @@ export const login = new Elysia()
     set.redirect = "/";
   })
   .post("/submit-login", async ({ set, setCookie, jwt, body }) => {
-    const user: User | false = await verifyUser(body as any);
-    if (!user) {
+    const user: User | LOGIN_FAILURE_REASON = await verifyUser(body as any);
+    if (LOGIN_FAILURE_REASON.USER_NOT_FOUND === user) {
       set.status = 401;
       return (set.redirect = "/signup");
+    }
+    if(LOGIN_FAILURE_REASON.INVALID_PASSWORD === user) {
+      set.status = 401;
+      return (set.redirect = "/login");
     }
     setCookie("auth", await jwt.sign(user), {
       httpOnly: true,

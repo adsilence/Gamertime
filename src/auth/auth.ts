@@ -1,60 +1,64 @@
 import { Elysia } from "elysia";
 import jwt from "@elysiajs/jwt";
 import bcrypt from "bcrypt";
-
-/**
- * @deprecated - Going to be deleted and replacted with database
- */
-const users: UserStore = {};
+import * as usersClient from "../db/clients/auth/usersClient";
+import * as passwordClient from "../db/clients/auth/passwordClient";
 
 // TODO: Make config
 const SALT_ROUNDS = 10;
 
-export interface User {
+export enum LOGIN_FAILURE_REASON {
+  USER_NOT_FOUND,
+  INVALID_PASSWORD,
+}
+
+export interface DTOSignupUser {
   email: string;
-  username: string;
   displayName: string;
   avatar: string;
 }
 
-interface UserStore {
-  [username: string]: { user: User; password: string };
+export interface User {
+  id: number;
+  email: string;
+  displayName: string;
+  avatar: string;
 }
 
 export async function registerUser(
   newUser: {
     email: string;
-    username: string;
     displayName: string;
   },
   password: string
 ): Promise<User> {
-  const user: User = {
+  const user: User = await usersClient.createUser({
     email: newUser.email,
-    username: newUser.username,
     displayName: newUser.displayName,
     avatar: "https://avatars.githubusercontent.com/u/20482179?v=4",
-  };
+  });
 
-  // TODO: Save user to database instead of in memory
   const hash = await bcrypt.hash(password, SALT_ROUNDS);
-  users[newUser.email] = { user: user, password: hash };
+  passwordClient.setUserPasswordHash(user.id, hash);
 
   return user;
 }
 
 export async function verifyUser(body: {
   password: string;
-  username: string;
-}): Promise<false | User> {
-  if (
-    !!users[body.username] &&
-    (await bcrypt.compare(body.password, users[body.username].password))
-  ) {
-    return users[body.username].user;
-  }
+  email: string;
+}): Promise<LOGIN_FAILURE_REASON | User> {
+  const user = await usersClient.getUserByEmail(body.email);
+  if (user === undefined) return LOGIN_FAILURE_REASON.USER_NOT_FOUND;
 
-  return false;
+  const passwordhash = await passwordClient.getUserPasswordHash(user.id);
+  // This should never happen if we are handling passwords correctly
+  if (passwordhash === undefined) throw new Error("Unable to find password");
+
+  if (!(await bcrypt.compare(body.password, passwordhash)))
+    return LOGIN_FAILURE_REASON.INVALID_PASSWORD;
+
+  return user;
 }
 
 export function requireAuth(context: { jwt: any; cookie: any; set: any }) {
@@ -81,7 +85,7 @@ async function getUser(jwt: any, cookie: any): Promise<User | undefined> {
 async function isAuthorized(jwt: any, cookie: any) {
   const user: User = await jwt.verify(cookie["auth"].get());
   // Verify authed user exists and is in store
-  return !!user && !!users[user.email];
+  return !!user && !!usersClient.getUserByEmail(user.email);
 }
 
 export const auth = new Elysia()

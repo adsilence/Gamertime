@@ -14,7 +14,7 @@ export function Login() {
             action="/submit-login"
             method="post"
           >
-            <Input label="Username" id="username" name="username" />
+            <Input label="Email" id="email" name="email" />
 
             <Input
               label="Password"
