@@ -7,7 +7,7 @@
     "tailwind": "bun run tailwindcss -i ./src/input.css -o ./public/output.css --watch",
     "dev": "concurrently \"bun serve\" \"bun tailwind\"",
     "run_database_migrations": "bun drizzle-kit generate:pg && bun run src/db/migrations.ts",
-    "setup": "echo '⏳ Getting everything ready!' && bun install && docker run --name gamertime-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres && while [ \"$(which docker) exec gamertime-postgres pg_isready\" == \"/var/run/postgresql:5432 - accepting connections\" ]; do sleep 2; done && echo '🏃 Database Running! ' && cp ./.env.example ./.env && echo '🏁 Setup Complete!'",
+    "setup": "echo '⏳ Getting everything ready!' && bun install && docker run --name gamertime-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres && echo '🏃 Database Running! ' && cp ./.env.example ./.env && echo '🏁 Setup Complete!'",
     "clean": "rm -rf ./drizzle && docker stop gamertime-postgres || true && docker rm --force gamertime-postgres || true"
   },
   "dependencies": {
