@@ -16,6 +16,8 @@ A non-profit social media website
 
 4. Run `bun run_database_migrations`
 
+> Note: If you run into issues with this setup, try running `bun clean` and retrying steps 3-4.
+
 ## Run Locally
 
 1. Run `bun dev`
