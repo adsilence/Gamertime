@@ -8,7 +8,6 @@ export function Signup() {
 
       <form action="/submit-signup" method="post">
         <Input label="Email" id="email" name="email" />
-        <Input label="Username" id="username" name="username" />
         <Input label="Display name" id="display-name" name="displayName" />
         <Input label="password" id="password" name="password" type="password" />
         <button>Sign up</button>
