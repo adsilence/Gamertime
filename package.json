@@ -5,7 +5,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "bun run --watch src/index.tsx",
     "tailwind": "bun run tailwindcss -i ./src/input.css -o ./public/output.css --watch",
-    "dev": "concurrently \"bun serve\" \"bun tailwind\""
+    "dev": "concurrently \"bun serve\" \"bun tailwind\"",
+    "run_database_migrations": "bun drizzle-kit generate:pg && bun run src/db/migrations.ts",
+    "setup": "echo '⏳ Getting everything ready!' && bun install && docker run --name gamertime-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres && while [ \"$(which docker) exec gamertime-postgres pg_isready\" == \"/var/run/postgresql:5432 - accepting connections\" ]; do sleep 2; done && echo '🏃 Database Running! ' && cp ./.env.example ./.env && echo '🏁 Setup Complete!'",
+    "clean": "rm -rf ./drizzle && docker stop gamertime-postgres || true && docker rm --force gamertime-postgres || true"
   },
   "dependencies": {
     "@elysiajs/cookie": "^0.8.0",
@@ -14,13 +17,18 @@
     "@elysiajs/static": "^0.8.1",
     "bcrypt": "^5.1.1",
     "classnames": "^2.5.1",
-    "elysia": "latest"
+    "drizzle-orm": "^0.29.3",
+    "elysia": "latest",
+    "postgres": "^3.4.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "bun-types": "latest",
     "concurrently": "^8.2.2",
     "daisyui": "^4.6.0",
+    "dotenv": "^16.3.1",
+    "drizzle-kit": "^0.20.13",
+    "pg": "^8.11.3",
     "prettier": "^3.2.1",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1"
