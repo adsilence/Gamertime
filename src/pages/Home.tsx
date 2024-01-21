@@ -1,4 +1,4 @@
-import { User } from "../auth/auth";
+import { User } from "../auth/authModule";
 import { HStack, VStack } from "../reusable/Layout";
 import { Page } from "../reusable/Page";
 
@@ -13,12 +13,14 @@ export function Home(context: { user: User }) {
             <a class="btn btn-sm self-start btn-secondary" href="/invite">
               Invite
             </a>
-
-            <a class="btn btn-sm self-start" href="/logout">
-              Logout
-            </a>
-
-            <img class="rounded-full size-8" src={context.user.avatar} />
+            <div class="dropdown dropdown-hover dropdown-end">
+            <img tabindex="0" class="rounded-full size-8" src={context.user.avatar} />
+                <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full">
+                  <li><a href="/profile">Profile</a></li>
+                  <li><a href="/profile/settings">Settings</a></li>
+                  <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
           </HStack>
         </HStack>
       </nav>

@@ -88,7 +88,7 @@ async function isAuthorized(jwt: any, cookie: any) {
   return !!user && !!usersClient.getUserByEmail(user.email);
 }
 
-export const auth = new Elysia()
+export const authModule = new Elysia({ name: "authModule" })
   .use(
     jwt({
       name: "jwt",

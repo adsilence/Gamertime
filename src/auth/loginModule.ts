@@ -1,5 +1,5 @@
 import { Elysia } from "elysia";
-import { User, verifyUser, registerUser, LOGIN_FAILURE_REASON } from "./auth";
+import { User, verifyUser, registerUser, LOGIN_FAILURE_REASON } from "./authModule";
 import { Signup } from "../pages/Signup";
 import { Login } from "../pages/Login";
 import cookie from "@elysiajs/cookie";
@@ -7,7 +7,7 @@ import cookie from "@elysiajs/cookie";
 // TODO: Make config
 const COOKIE_MAX_AGE = 7 * 86400;
 
-export const login = new Elysia()
+export const loginModule = new Elysia({ name: "loginModule" })
   .use(cookie())
   .get("/signup", Signup)
   .get("/login", Login)

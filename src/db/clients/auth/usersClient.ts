@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import { DTOSignupUser, User } from "../../../auth/auth";
+import { DTOSignupUser, User } from "../../../auth/authModule";
 import { users } from "../../schema/users";
 import { db } from "../database";
 
