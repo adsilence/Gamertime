@@ -3,16 +3,18 @@ import { html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
 import { Home } from "./pages/Home";
 
-import { auth, requireAuth } from "./auth/auth";
-import { login } from "./auth/login";
+import { authModule, requireAuth } from "./auth/authModule";
+import { loginModule } from "./auth/loginModule";
 import { GuestHome } from "./pages/GuestHome";
 import { Invite } from "./pages/Invite";
+import { profileModule } from "./pages/profile/profileModule";
 
 const app = new Elysia()
   .use(html())
   .use(staticPlugin())
-  .use(auth)
-  .use(login)
+  .use(authModule)
+  .use(loginModule)
+  .use(profileModule)
 
   .get("/", Home, { beforeHandle: requireAuth })
   .get("/invite", Invite, { beforeHandle: requireAuth })
