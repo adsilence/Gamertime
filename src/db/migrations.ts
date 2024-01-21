@@ -1,8 +1,7 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import postgres from 'postgres';
-
-const postgresConnectionURL = `postgres://${process.env.DB_NAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}`;
+import { postgresConnectionURL } from '../../drizzle.config';
 
 const migrationClient = postgres(postgresConnectionURL, { max: 1 });
 
