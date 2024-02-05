@@ -6,9 +6,9 @@
     "serve": "bun run --watch src/index.tsx",
     "tailwind": "bun run tailwindcss -i ./src/input.css -o ./public/output.css --watch",
     "dev": "concurrently \"bun serve\" \"bun tailwind\"",
-    "run_database_migrations": "bun drizzle-kit generate:pg && bun run src/db/migrations.ts",
-    "setup": "echo '⏳ Getting everything ready!' && bun install && docker run --name gamertime-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres && echo '🏃 Database Running! ' && cp ./.env.example ./.env && echo '🏁 Setup Complete!'",
-    "clean": "rm -rf ./drizzle && docker stop gamertime-postgres || true && docker rm --force gamertime-postgres || true"
+    "run_database_migrations": "bun drizzle-kit generate:sqlite && bun run src/db/migrations.ts",
+    "setup": "echo '⏳ Getting everything ready!' && bun install && cp ./.env.example ./.env && echo '🏁 Setup Complete!'",
+    "clean": "rm -rf ./drizzle"
   },
   "dependencies": {
     "@elysiajs/cookie": "^0.8.0",
@@ -16,6 +16,7 @@
     "@elysiajs/jwt": "^0.8.0",
     "@elysiajs/static": "^0.8.1",
     "bcrypt": "^5.1.1",
+    "better-sqlite3": "^9.3.0",
     "classnames": "^2.5.1",
     "drizzle-orm": "^0.29.3",
     "elysia": "latest",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/better-sqlite3": "^7.6.9",
     "bun-types": "latest",
     "concurrently": "^8.2.2",
     "daisyui": "^4.6.0",

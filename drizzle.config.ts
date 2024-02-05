@@ -6,9 +6,9 @@ export const postgresConnectionURL = `postgres://${process.env.DB_NAME}:${proces
 export default {
   schema: "./src/db/schema",
   out: "./drizzle",
-  driver: "pg", // 'pg' | 'mysql2' | 'better-sqlite' | 'libsql' | 'turso'
+  driver: "better-sqlite", // 'pg' | 'mysql2' | 'better-sqlite' | 'libsql' | 'turso'
   // dbCredentials is necessasary for drizzle-kit studio to connect to the database.
   dbCredentials: {
-    connectionString: postgresConnectionURL,
+    url: "sqlite.db"
   }
 } satisfies Config;
