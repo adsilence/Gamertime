@@ -7,7 +7,7 @@
     "tailwind": "bun run tailwindcss -i ./src/input.css -o ./public/output.css --watch",
     "dev": "concurrently \"bun serve\" \"bun tailwind\"",
     "run_database_migrations": "bun drizzle-kit generate:sqlite && bun run src/db/migrations.ts",
-    "setup": "echo '⏳ Getting everything ready!' && bun install && cp ./.env.example ./.env && echo '🏁 Setup Complete!'",
+    "setup": "echo '⏳ Getting everything ready!' && bun install && echo '🏁 Setup Complete!'",
     "clean": "rm -rf ./drizzle && rm sqlite.db"
   },
   "dependencies": {
