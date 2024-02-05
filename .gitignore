@@ -40,3 +40,4 @@ package-lock.json
 
 drizzle
 .env
+sqlite.db
