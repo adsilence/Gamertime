@@ -20,7 +20,7 @@ A non-profit social media website
 
 6. Run `bun run_database_migrations`
 
-> Note: If you run into issues with this setup, try running `bun clean` and retrying steps 3-4. `bun clean` will delete your postgress docker container and delete the migrations metadata so a clean migration can be run.
+> Note: If you run into issues with this setup, try running `bun clean` and retrying steps 3-4. `bun clean` will delete your sqlite database and delete the migrations metadata so a clean migration can be run.
 
 ## Run Locally
 
