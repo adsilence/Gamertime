@@ -1,10 +1,8 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-import "dotenv/config";
-import { postgresConnectionURL } from "../../../drizzle.config";
+import { drizzle } from "drizzle-orm/bun-sqlite";
+import { Database } from "bun:sqlite";
 
 console.log("Connecting to database!");
 
-const dbConnection = postgres(postgresConnectionURL);
+const sqliteDbConnection = new Database('sqlite.db');
 
-export const db = drizzle(dbConnection);
+export const db = drizzle(sqliteDbConnection);

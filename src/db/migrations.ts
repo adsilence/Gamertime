@@ -1,13 +1,9 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import { migrate } from 'drizzle-orm/postgres-js/migrator';
-import postgres from 'postgres';
-import { postgresConnectionURL } from '../../drizzle.config';
+import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 
-const migrationClient = postgres(postgresConnectionURL, { max: 1 });
+import { drizzle } from "drizzle-orm/bun-sqlite";
+import { Database } from "bun:sqlite";
 
-// Need to put in a function since top level await is not supported >:(
-(async()=>{
-  await migrate(drizzle(migrationClient), {migrationsFolder: "drizzle"});
-  
-  await migrationClient.end();
-})();
+const sqliteDbConnection = new Database('sqlite.db');
+
+migrate(drizzle(sqliteDbConnection), {migrationsFolder: "drizzle"});
+sqliteDbConnection.close();
